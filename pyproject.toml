@@ -1,0 +1,21 @@
+[project]
+name = "pos-mcp-server"
+version = "1.0.0"
+description = "Point of Sale MCP server — watsonx Orchestrate lab demo"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "fastmcp>=2.0.0",
+]
+
+[project.scripts]
+# This is the command name used in the uvx invocation:
+#   uvx --from git+https://<PAT>@github.ibm.com/... pos-mcp-server
+pos-mcp-server = "pos_mcp_server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
