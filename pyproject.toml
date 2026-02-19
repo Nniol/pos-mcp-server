@@ -10,7 +10,7 @@ dependencies = [
 
 [project.scripts]
 # This is the command name used in the uvx invocation:
-#   uvx --from git+https://<PAT>@github.ibm.com/... pos-mcp-server
+#   uvx --from git+https://<PAT>@github.ibm.com/wxo-bootcamp-labs/simple_mcp_lab.git pos-mcp-server
 pos-mcp-server = "pos_mcp_server:main"
 
 [build-system]
