@@ -28,7 +28,7 @@ The server uses **stdio transport**: the ADK spawns it as a local subprocess by 
 ### Use the GUI
 
 1. Open your watsonx Orchestrate instance in a browser.
-2. Click **☰ menu → Build → Tools → Create Tool + → MCP Server → Add MCP Server + -> Local MCP Server → Next**.
+2. Click **☰ menu → Build → All tools → Create Tool + → MCP Server → Add MCP Server + -> Local MCP Server → Next**.
 3. Fill in the form:
 
    | Field | Value |
@@ -179,6 +179,156 @@ These prompts require the agent to chain tools based on intermediate results.
 | *"Which low-stock items have been selling the most?"* | `pos_inventory_alerts` → extract product IDs → `pos_sales_report` → correlate stock vs revenue |
 | *"What did Anna sell on June 1st and are any of those items running low?"* | `pos_sales_report` (Anna, June 1) → extract product IDs → `pos_get_product` for each → flag low stock |
 | *"List all Bakery products and show their recent sales"* | `pos_list_products` (Bakery) → `pos_sales_report` → match products to revenue |
+
+---
+
+## Part 5 — Build a multi-agent system (10 min)
+
+### Why multi-agent?
+
+A single ReAct agent works well, but it has limits: one agent handles everything serially, its context grows with every tool call, and there is no separation of concerns. Real production systems decompose work across **specialist agents** coordinated by a **supervisor**.
+
+In this part you will build a three-agent system around the store health-check scenario from Part 4:
+
+```
+User
+  │
+  ▼
+Store Manager Agent  ◄── supervisor: receives the question, delegates, synthesises
+  │              │
+  ▼              ▼
+Inventory       Operations
+Agent           Agent
+(stock &        (terminals &
+ products)       sales)
+```
+
+The Store Manager never calls a POS tool directly. It delegates to its two sub-agents, waits for their responses, then combines them into a single answer.
+
+### Agent style choices
+
+Not every agent needs the same reasoning style. In this system each agent has a different role, so each gets a different style:
+
+| Agent | Style | Why |
+|---|---|---|
+| Inventory Agent | **Default** | Receives a focused sub-question from the manager — typically one or two tool calls with no branching. ReAct overhead adds nothing here. |
+| Operations Agent | **Default** | Same reasoning — a narrow, delegated question that rarely needs more than two sequential tool calls. |
+| Store Manager Agent | **ReAct** | This is where the orchestration happens. The manager must decide which specialists to call, read their responses, judge whether a follow-up is needed, and synthesise across multiple observations. That is exactly the Thought → Action → Observation loop ReAct is designed for. |
+
+**Rule of thumb:** specialists do, supervisors reason.
+
+---
+
+---
+
+### Step 1 — Create the Inventory Agent (2 min)
+
+1. **Navigation menu (☰) → Build → Create Agent + → Create from Scratch**
+2. Name: `POS Inventory Agent`
+3. Description: `Specialist agent for product catalogue, stock levels, and inventory alerts`
+4. Create
+5. **Toolset → Add tool + → Local Instance** — select:
+   - `pos_list_products`
+   - `pos_get_product`
+   - `pos_inventory_alerts`
+6. Add to Agent
+7. **Behavior → Instructions** — paste:
+
+```
+You are an inventory specialist for a coffee shop chain.
+
+You have access to three tools:
+  - pos_list_products    — browse the full product catalogue, optionally by category
+  - pos_get_product      — get price and current stock for a specific product ID
+  - pos_inventory_alerts — list products at or below a stock threshold (default: 20 units)
+
+Answer only inventory and product questions. Be concise. Always include:
+  - Which products are critically low or out of stock
+  - Current stock levels for any product mentioned
+  - Product IDs where relevant so other agents can reference them
+```
+
+---
+
+### Step 2 — Create the Operations Agent (2 min)
+
+1. **Navigation menu (☰) → Build → Create Agent + → Create from Scratch**
+2. Name: `POS Operations Agent`
+3. Description: `Specialist agent for terminal status and sales performance`
+4. Create
+5. **Toolset → Add tool + → Local Instance** — select:
+   - `pos_terminal_status`
+   - `pos_sales_report`
+6. Add to Agent
+7. **Behavior → Instructions** — paste:
+
+```
+You are an operations specialist for a coffee shop chain.
+
+You have access to two tools:
+  - pos_terminal_status  — current online/offline status of all POS terminals
+  - pos_sales_report     — revenue and transaction data, filterable by date and cashier
+
+Answer only operations and sales questions. Be concise. Always include:
+  - Which terminals are offline and their location
+  - Revenue totals and top-performing cashiers when asked about sales
+  - Any anomalies that an operations manager should act on
+```
+
+---
+
+### Step 3 — Create the Store Manager Agent (3 min)
+
+1. **Navigation menu (☰) → Build → Create Agent + → Create from Scratch**
+2. Name: `POS Store Manager Agent`
+3. Description: `Supervisor agent that coordinates the Inventory and Operations specialists to produce unified store health reports`
+4. Create
+5. Scroll down to find **Agent style**.
+6. Select `ReAct`
+7. **Toolset → Add tool + → Local Instance** — select:
+   - `POS Inventory Agent`
+   - `POS Operations Agent`
+8. Add to Agent
+9. **Behavior → Instructions** — paste:
+
+```
+You are the store manager for a coffee shop chain. You coordinate two specialist agents
+to answer operational questions.
+
+Your specialists:
+  - POS Inventory Agent   — handles product catalogue, stock levels, and inventory alerts
+  - POS Operations Agent  — handles terminal status and sales performance
+
+For every question:
+1. Decide which specialist(s) can answer it.
+2. Delegate to them — send a clear, specific sub-question to each.
+3. Wait for their responses.
+4. Synthesise the results into a single, well-structured answer for the user.
+
+You do NOT call POS tools directly. You delegate entirely to your specialists.
+
+When producing a store health check, always cover:
+  - Terminal status (any offline?)
+  - Inventory alerts (any items critically low or out of stock?)
+  - A recommended action for each issue found
+```
+
+---
+
+### Step 4 — Test the multi-agent system (3 min)
+
+Open the **Store Manager Agent** in Chat and try these prompts. Watch how the supervisor delegates and then combines the results.
+
+| Prompt | What should happen |
+|---|---|
+| *"Give me a full store health check"* | Manager delegates to both specialists in parallel; combines terminal + inventory report |
+| *"Which low-stock items have been selling the most this week?"* | Manager asks Inventory Agent for low-stock items, then asks Operations Agent for sales data on those products |
+| *"Is T3 back online and do we have enough stock to reopen it?"* | Manager asks Operations Agent about T3, asks Inventory Agent for stock levels, combines into a readiness report |
+
+**What to observe:**
+- The Store Manager's reasoning trace shows it issuing sub-questions to the specialist agents
+- Each specialist only uses its own tools — no cross-contamination
+- The final answer is richer than any single agent could produce alone
 
 ---
 
