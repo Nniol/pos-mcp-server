@@ -182,6 +182,22 @@ These prompts require the agent to chain tools based on intermediate results.
 
 ---
 
+## What's next? Take it further
+
+You've just built an agent that reasons across multiple tools — that's the foundation of every serious agentic system in production today.
+
+Now push further. Try crafting your own prompts. Swap the instructions. See if you can break the ReAct loop or improve it. The best way to understand agentic AI is to build intuition through experimentation — and you now have a live system to experiment on.
+
+When you're ready, **move to the next challenge**:
+
+> **[wxo-bootcamp-mcp-server](https://github.com/Nniol/wxo-bootcamp-mcp-server)**
+>
+> You'll work with a richer MCP server backed by a synthetic hospital dataset — patient records, vital signs, prescriptions, drug interactions, and more. Your challenge: design and build a multi-agent system from scratch. No guardrails, no step-by-step instructions. Just tools, a problem to solve, and everything you've learned here.
+>
+> This is where architects become AI engineers.
+
+---
+
 ## Quick reference — fake data
 
 ### Products
