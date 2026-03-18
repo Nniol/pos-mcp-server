@@ -127,6 +127,8 @@ Final Answer: synthesised response
 2. Name: `POS ReAct Agent`
 3. Description: `Uses step-by-step reasoning to answer complex operational questions by chaining multiple POS tools`
 4. Create
+5. Scroll down to find **Agent style**. 
+6. Select `ReAct`
 5. **Toolset (on the left) → Add tool + → Local Instance**
 6. Select all 5 tools (`pos_list_products`, `pos_get_product`, `pos_sales_report`, `pos_inventory_alerts`, `pos_terminal_status`)
 7. Add to Agent
@@ -168,6 +170,8 @@ Rules:
 ### Test the ReAct agent (multi-tool prompts)
 
 These prompts require the agent to chain tools based on intermediate results.
+
+**REMEBER** After each time you have run a prompt clock on the '_Reset chat_' icon at the top right, the almost circle, an anti-clocwise arrow...
 
 | Prompt | Expected ReAct chain |
 |---|---|
