@@ -190,7 +190,7 @@ Now push further. Try crafting your own prompts. Swap the instructions. See if y
 
 When you're ready, **move to the next challenge**:
 
-> **[wxo-bootcamp-mcp-server](https://github.com/Nniol/wxo-bootcamp-mcp-server)**
+> **[Orchestrate Hackthon.....](https://github.com/Nniol/wxo-bootcamp-mcp-server/tree/main/docs)**
 >
 > You'll work with a richer MCP server backed by a synthetic hospital dataset — patient records, vital signs, prescriptions, drug interactions, and more. Your challenge: design and build a multi-agent system from scratch. No guardrails, no step-by-step instructions. Just tools, a problem to solve, and everything you've learned here.
 >
