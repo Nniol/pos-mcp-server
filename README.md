@@ -39,12 +39,6 @@ The server uses **stdio transport**: watsonx Orchestrate spawns it as a local su
 
 4. Click **Import** — all 5 tools should appear after a little wait.
 
-To see the imported tools in the cli
-
-```bash
-orchestrate tookits list
-```
-
 ---
 
 ## Part 2 — Assign tools to an agent
