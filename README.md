@@ -1,7 +1,6 @@
 # Lab: Import a POS MCP Server into watsonx Orchestrate
 
-**Duration:** ~15 minutes  
-**Level:** Introductory  
+**Level:** Introductory to Medium 
 
 ---
 
@@ -23,7 +22,7 @@ The server uses **stdio transport**: watsonx Orchestrate spawns it as a local su
 
 ---
 
-## Part 1 — Register the server in watsonx Orchestrate (5 min)
+## Part 1 — Register the server in watsonx Orchestrate
 
 ### Use the GUI
 
@@ -48,7 +47,7 @@ orchestrate tookits list
 
 ---
 
-## Part 2 — Assign tools to an agent (2 min)
+## Part 2 — Assign tools to an agent
 
 1. **Navigation menu (☰ top-left) → Build → Create Agent + → Create from Scratch** 
 2. Name: Simple POS Query Agent
@@ -63,7 +62,7 @@ orchestrate tookits list
 
 ---
 
-## Part 3 — Test the agent (4 min)
+## Part 3 — Test the agent
 
 In the  **Chat** try each prompt below. Each one targets a different tool.
 
@@ -77,7 +76,7 @@ In the  **Chat** try each prompt below. Each one targets a different tool.
 
 ---
 
-## Part 4 — Build a ReAct-style agent (5 min)
+## Part 4 — Build a ReAct-style agent
 
 ### What is ReAct?
 
@@ -182,7 +181,7 @@ These prompts require the agent to chain tools based on intermediate results.
 
 ---
 
-## Part 5 — Build a multi-agent system (10 min)
+## Part 5 — Build a multi-agent system
 
 ### Why multi-agent?
 
@@ -221,7 +220,7 @@ Not every agent needs the same reasoning style. In this system each agent has a 
 
 ---
 
-### Step 1 — Create the Inventory Agent (2 min)
+### Step 1 — Create the Inventory Agent
 
 1. **Navigation menu (☰) → Build → Create Agent + → Create from Scratch**
 2. Name: `POS Inventory Agent`
@@ -250,7 +249,7 @@ Answer only inventory and product questions. Be concise. Always include:
 
 ---
 
-### Step 2 — Create the Operations Agent (2 min)
+### Step 2 — Create the Operations Agent
 
 1. **Navigation menu (☰) → Build → Create Agent + → Create from Scratch**
 2. Name: `POS Operations Agent`
@@ -277,7 +276,7 @@ Answer only operations and sales questions. Be concise. Always include:
 
 ---
 
-### Step 3 — Create the Store Manager Agent (3 min)
+### Step 3 — Create the Store Manager Agent
 
 1. **Navigation menu (☰) → Build → Create Agent + → Create from Scratch**
 2. Name: `POS Store Manager Agent`
@@ -315,7 +314,7 @@ When producing a store health check, always cover:
 
 ---
 
-### Step 4 — Test the multi-agent system (3 min)
+### Step 4 — Test the multi-agent system
 
 Open the **Store Manager Agent** in Chat and try these prompts. Watch how the supervisor delegates and then combines the results.
 
