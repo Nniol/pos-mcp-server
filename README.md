@@ -54,7 +54,7 @@ orchestrate tookits list
 3. Description: Answers basic questions and products, sales performance, inventory levels, and terminal status at a coffee shop
 4. Create
 5. Toolset (on the left) → Add tool + → Local Instance
-6. Select the 5 tools you just imported, they start: `simple_mcp_server:`
+6. Select the 5 tools you just imported, they start: `pos-mcp:`
 7. Add to Agnet
 8. Behavior (on the left) → Paste the following into `Instructions`
    > *You are a retail assistant for a coffee shop chain. Use the POS tools to answer
