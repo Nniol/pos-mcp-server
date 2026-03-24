@@ -9,7 +9,7 @@
 
 In this lab you will import a ready-made **Point of Sale (POS) MCP server** into watsonx Orchestrate. The server is published as a public package on PyPI and is pulled on demand using `uvx` — no manual cloning, `pip install`, or access token required.
 
-The server uses **stdio transport**: the ADK spawns it as a local subprocess by running the `uvx` command. No network port or tunnel is needed.
+The server uses **stdio transport**: watsonx Orchestrate spawns it as a local subprocess by running the `uvx` command. No network port or tunnel is needed.
 
 ### POS tools provided
 
