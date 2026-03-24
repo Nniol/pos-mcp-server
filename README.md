@@ -278,7 +278,7 @@ Answer only operations and sales questions. Be concise. Always include:
 4. Create
 5. Scroll down to find **Agent style**.
 6. Select `ReAct`
-7. **Toolset → Add tool + → Local Instance** — select:
+7. **Toolset → Add Agent + → Local Instance** — select:
    - `POS Inventory Agent`
    - `POS Operations Agent`
 8. Add to Agent
