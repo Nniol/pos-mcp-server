@@ -49,7 +49,7 @@ The server uses **stdio transport**: watsonx Orchestrate spawns it as a local su
 4. Create
 5. Toolset (on the left) → Add tool + → Local Instance
 6. Select the 5 tools you just imported, they start: `pos-mcp:`
-7. Add to Agnet
+7. Add to Agent
 8. Behavior (on the left) → Paste the following into `Instructions`
    > *You are a retail assistant for a coffee shop chain. Use the POS tools to answer
    > questions about products, sales performance, inventory levels, and terminal status.*
